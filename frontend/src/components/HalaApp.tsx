@@ -35,7 +35,7 @@ export default function HalaApp() {
   const Outward = ar ? ArrowUpLeft : ArrowUpRight;
   const Chevron = ar ? ChevronLeft : ChevronRight;
   const busy = voice.status !== "idle";
-  const statusLabel = { idle: t("جاهزة أسمعك", "Ready when you are"), connecting: t("لحظة، نتّصل…", "Connecting…"), listening: voice.muted ? t("الميكروفون مكتوم", "Microphone muted") : t("أسمعك… خذ راحتك", "Listening… take your time"), thinking: t("أفكّر معك…", "Thinking with you…"), speaking: t("هلا تتكلم…", "Hala is speaking…") }[voice.status];
+  const statusLabel = voice.recovering ? t("الاتصال ضعيف، لحظة ونرجع…", "Connection interrupted, reconnecting…") : { idle: t("جاهزة أسمعك", "Ready when you are"), connecting: t("لحظة، نتّصل…", "Connecting…"), listening: voice.muted ? t("الميكروفون مكتوم", "Microphone muted") : t("أسمعك… خذ راحتك", "Listening… take your time"), thinking: t("أفكّر معك…", "Thinking with you…"), speaking: t("هلا تتكلم…", "Hala is speaking…") }[voice.status];
 
   async function loadKnowledge() { setLoadError(false); try { const response = await fetch("/api/knowledge"); if (!response.ok) throw new Error(); setKnowledge(await response.json()); } catch { setLoadError(true); } }
   useEffect(() => { void loadKnowledge(); try { const saved = JSON.parse(localStorage.getItem("hala-preferences") || "{}"); if (["ar", "en"].includes(saved.language)) setLanguage(saved.language); if (["general", ...goals.map(g => g.id)].includes(saved.goal)) setGoal(saved.goal); } catch { /* Private browsing can disable storage. */ } setPreferencesReady(true); }, []);

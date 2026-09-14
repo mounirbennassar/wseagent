@@ -37,7 +37,7 @@ const {chromium}=require('../frontend/node_modules/@playwright/test');
   assert.equal(await page.evaluate(()=>window.__events.filter(e=>e.type==='response.created').length),1,'Wait silently after the opening question');
   console.log('Waits for visitor: PASS');
   if(process.env.HALA_ADVISOR_EVAL==='1'){
-   for(const text of ['أبي أتعلم إنجليزي','هدفي أطور نفسي بالشغل، دوامي يتغيّر وأبغى أونلاين مع إمكانية الحضور للمركز']){
+   for(const text of ['أبي أتعلم إنجليزي','هدفي أطور نفسي بالشغل، دوامي يتغيّر وأبغى أونلاين مع إمكانية الحضور للمركز','كيف يمكنني معرفة الرسوم الدراسية؟']){
     const count=await page.evaluate(()=>window.__events.filter(e=>e.type==='response.output_audio_transcript.done').length);
     await page.evaluate(text=>{window.__channel.send(JSON.stringify({type:'conversation.item.create',item:{type:'message',role:'user',content:[{type:'input_text',text}]}}));window.__channel.send(JSON.stringify({type:'response.create'}));},text);
     await page.waitForFunction(count=>window.__events.filter(e=>e.type==='response.output_audio_transcript.done').length>count,count,{timeout:45000});
@@ -47,9 +47,13 @@ const {chromium}=require('../frontend/node_modules/@playwright/test');
     await page.waitForFunction(()=>window.__events.filter(e=>e.type==='output_audio_buffer.stopped').length>=window.__events.filter(e=>e.type==='response.output_audio_transcript.done').length,{},{timeout:30000});
    }
   }
+  console.log('Response outcomes:',await page.evaluate(()=>window.__events.filter(e=>e.type==='response.done').map(e=>({status:e.response.status,details:e.response.status_details,usage:e.response.usage}))));
+  console.log('Speech interruptions:',await page.evaluate(()=>window.__events.filter(e=>e.type==='input_audio_buffer.speech_started').length));
   assert.ok(await page.evaluate(()=>window.__events.filter(e=>e.type==='response.done').every(e=>e.response.status==='completed')),'All generated replies must finish without truncation');
   console.log('Connection:',await page.evaluate(()=>window.__peers[0].connectionState));
-  console.log('Received audio bytes:',await page.evaluate(async()=>{const stats=await window.__peers[0].getStats();let bytes=0;stats.forEach(s=>{if(s.type==='inbound-rtp'&&s.kind==='audio')bytes+=s.bytesReceived});return bytes}));
+  const audioStats=await page.evaluate(async()=>{const stats=await window.__peers[0].getStats();const audio=[];stats.forEach(s=>{if(s.type==='inbound-rtp'&&s.kind==='audio')audio.push({bytes:s.bytesReceived,packetsLost:s.packetsLost,jitter:s.jitter,concealedSamples:s.concealedSamples,totalSamples:s.totalSamplesReceived})});return audio});
+  console.log('Audio delivery:',audioStats);
+  assert.ok(audioStats.some(s=>s.bytes>0),'Remote audio must reach the browser');
   await page.getByRole('button',{name:'كتم الميكروفون',exact:true}).click();
   console.log('Muted tracks:',await page.evaluate(()=>window.__peers[0].getSenders().filter(s=>s.track).every(s=>!s.track.enabled)));
   await page.getByRole('button',{name:'إنهاء',exact:true}).click();

@@ -87,7 +87,7 @@ def session_config(language="ar", goal="general"):
         "instructions": instructions(language, goal),
         "output_modalities": ["audio"],
         # Allow room for reasoning without cutting a short spoken reply mid-sentence.
-        "max_output_tokens": 1200,
+        "max_output_tokens": 4096,
         "audio": {
             "input": {
                 "noise_reduction": {"type": "near_field"},

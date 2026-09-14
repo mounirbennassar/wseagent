@@ -19,9 +19,9 @@ The supplied key is already configured in the local `.env`, restricted to owner 
 
 ## Features
 
-- Saudi Arabic by default, English UI and replies on request. RTL/LTR layouts. The opening identifies Hala and Wall Street English, asks how she can help, then waits.
+- Consistent everyday Saudi Arabic with a light Riyadh/Najdi delivery by default, including program and price explanations; English UI and replies on request. RTL/LTR layouts. The opening identifies Hala and Wall Street English, asks how she can help, then waits.
 - Live voice using `gpt-realtime-2.1`, with the `marin` voice, patient semantic turn detection (`eagerness: low`) and interruption support.
-- Real microphone control, mute, end/cancel, connection timeout, audio playback recovery and live transcripts. A session closes after ten minutes; this is a client-side demo limit, not a billing enforcement mechanism.
+- Real microphone control, mute, end/cancel, connection timeout, audio playback recovery and live transcripts. Brief network disconnects get a 12-second recovery window; supported browsers request a 180ms jitter buffer. Incomplete model replies show a continuation prompt without stopping buffered audio. A session closes after ten minutes; this is a client-side demo limit, not a billing enforcement mechanism.
 - Independent text conversation using the Responses API (`gpt-4.1-mini`).
 - An adaptive advisor playbook covers intent discovery, direct questions, relevant course recommendations, objections and a respectful close. No lessons, quizzes or mock interviews. Learning goals inform both voice and text guidance. Changing the language ends the current voice call; changing goals is disabled during calls.
 - Full Access and online learning options, personalized-price explanations and links to official information.
@@ -77,6 +77,6 @@ Optional live integration check (incurs OpenAI API usage):
 node scripts/voice-smoke.cjs
 ```
 
-This uses a synthetic microphone, checks a real greeting transcript and incoming audio bytes, then verifies mute and cleanup. It does not validate subjective Saudi accent quality or a physical phone's microphone/audio behavior.
+This uses a synthetic microphone, checks a real greeting transcript and incoming audio delivery statistics and response completion, then verifies mute and cleanup. It does not validate subjective Saudi accent quality or a physical phone's microphone/audio behavior.
 
 For optional live advisor behavior checks (billable API calls), run `.venv/bin/python scripts/advisor-smoke.py` and `HALA_ADVISOR_EVAL=1 node scripts/voice-smoke.cjs`. Set `HALA_BASE_URL` to test the deployed site. These check greeting, waiting, concise discovery, recommendation, pricing, no-teaching and declining; they do not guarantee every model response or real-microphone turn timing.
