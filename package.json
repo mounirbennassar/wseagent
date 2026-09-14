@@ -1,0 +1,1 @@
+{"name":"hala-agentlive","version":"1.0.0","private":true,"scripts":{"setup":"npm install --prefix frontend && python3 -m venv .venv && .venv/bin/pip install -r backend/requirements.txt","dev":"node scripts/dev.mjs","build":"npm run build --prefix frontend","test":".venv/bin/python -m pytest backend/tests -q && npm run test:e2e --prefix frontend"}}

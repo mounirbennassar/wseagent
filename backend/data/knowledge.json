@@ -1,0 +1,28 @@
+{
+  "verified_at": "2026-09-14",
+  "sources": [
+    {"title": "Wall Street English Saudi Arabia", "url": "https://wallstreetenglish.edu.sa/"},
+    {"title": "Learning centers", "url": "https://wallstreetenglish.edu.sa/institutes/"},
+    {"title": "Full Access learning", "url": "https://wallstreetenglish.edu.sa/full-access-english-schools/"}
+  ],
+  "facts": [
+    "Saudi courses offer professional native-speaking teachers, in-center and online study, interactive learning and payment flexibility. Confirm installment conditions with an advisor.",
+    "Full Access combines online study and center attendance. Learners prepare independently, receive teacher feedback and can join conversation and social activities. The page describes around four hours of weekly preparation; this is not the entire time commitment or a promise of fluency.",
+    "Full Access pricing depends on current level, individual goals and target level. A learning advisor confirms the actual study plan, duration, inclusions, availability and price. No verified numeric prices or promotions are stored here.",
+    "Center entries below are a verified sample, not the complete network. Do not infer availability, opening hours, addresses or gender access for unlisted centers. Refer to the official directory."
+  ],
+  "programs": [
+    {"id":"full-access","name":"Full Access","ar":"تعلّم على راحتك","en":"Your learning, your way","description_ar":"اجمع بين الأونلاين والحضور للمركز، مع دعم المدرّسين وممارسة المحادثة.","description_en":"Combine online learning and center attendance, with teacher support and conversation practice.","features_ar":["أونلاين + في المركز","دعم من المدرّسين","أنشطة وممارسة للمحادثة"],"features_en":["Online + in-center","Teacher support","Conversation activities"],"url":"https://wallstreetenglish.edu.sa/full-access-english-schools/"},
+    {"id":"online","name":"Online learning","ar":"إنجليزيتك، وين ما كنت","en":"English, wherever you are","description_ar":"اكتشف خيار الدراسة عن بُعد، واسأل المستشار عن الخطة المناسبة لجدولك.","description_en":"Explore remote learning and ask an advisor about a plan that fits your schedule.","features_ar":["دراسة عن بُعد","تعلّم يناسب يومك","التفاصيل مع المستشار"],"features_en":["Remote learning","Fits your day","Advisor confirms inclusions"],"url":"https://wallstreetenglish.edu.sa/institutes/"}
+  ],
+  "centers": [
+    {"name":"الرياض حي الجزيرة رجال","name_en":"Riyadh · Al Jazirah, men","city":"الرياض","city_en":"Riyadh","address":"مخرج 15، حي الجزيرة، مقابل الدانوب","phone":"0112881177"},
+    {"name":"الرياض حي الجزيرة سيدات","name_en":"Riyadh · Al Jazirah, women","city":"الرياض","city_en":"Riyadh","address":"مخرج 15، حي الجزيرة، مقابل الدانوب","phone":"0112881178"},
+    {"name":"الخبر","name_en":"Al Khobar","city":"الخبر","city_en":"Al Khobar","address":"طريق الملك فهد، قرب فندق كارلتون المعيبد","phone":"0138873999"},
+    {"name":"أبها رجال","name_en":"Abha · men","city":"أبها","city_en":"Abha","address":"الحزام الدائري، أمام الأحوال المدنية","phone":"0172280003"},
+    {"name":"الأحساء رجال","name_en":"Al Ahsa · men","city":"الأحساء","city_en":"Al Ahsa","address":"المبرز، شارع عين نجم، مقابل مكتبة جرير","phone":"0505611429"},
+    {"name":"الأحساء سيدات","name_en":"Al Ahsa · women","city":"الأحساء","city_en":"Al Ahsa","address":"المبرز، حي السلام الأول، مجمع الحفيز التجاري","phone":"0504411429"},
+    {"name":"الخرج الرجال","name_en":"Al Kharj · men","city":"الخرج","city_en":"Al Kharj","address":"طريق الملك عبدالله، الخزامى، مقابل جرير","phone":"0550233237"},
+    {"name":"الخرج سيدات","name_en":"Al Kharj · women","city":"الخرج","city_en":"Al Kharj","address":"طريق الملك عبدالله، الخزامى، مقابل جرير","phone":"0550233237"}
+  ]
+}
