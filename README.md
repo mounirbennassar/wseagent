@@ -1,6 +1,6 @@
 # Hala · هلا
 
-A mobile-first Wall Street English Saudi Arabia demo: Next.js 16 + React 19 + TypeScript frontend, Python/FastAPI backend, and OpenAI Realtime speech-to-speech over WebRTC.
+A mobile-first Wall Street English Saudi Arabia course-advisor demo: Next.js 16 + React 19 + TypeScript frontend, Python/FastAPI backend, and OpenAI Realtime speech-to-speech over WebRTC.
 
 ## Run locally
 
@@ -19,11 +19,11 @@ The supplied key is already configured in the local `.env`, restricted to owner 
 
 ## Features
 
-- Saudi Arabic by default, English UI and replies on request. RTL/LTR layouts.
-- Live voice using `gpt-realtime-2.1`, with the `marin` voice, semantic turn detection and interruption support.
+- Saudi Arabic by default, English UI and replies on request. RTL/LTR layouts. The opening identifies Hala and Wall Street English, asks how she can help, then waits.
+- Live voice using `gpt-realtime-2.1`, with the `marin` voice, patient semantic turn detection (`eagerness: low`) and interruption support.
 - Real microphone control, mute, end/cancel, connection timeout, audio playback recovery and live transcripts. A session closes after ten minutes; this is a client-side demo limit, not a billing enforcement mechanism.
 - Independent text conversation using the Responses API (`gpt-4.1-mini`).
-- Learning goals inform both voice and text guidance. Changing the language ends the current voice call; changing goals is disabled during calls.
+- An adaptive advisor playbook covers intent discovery, direct questions, relevant course recommendations, objections and a respectful close. No lessons, quizzes or mock interviews. Learning goals inform both voice and text guidance. Changing the language ends the current voice call; changing goals is disabled during calls.
 - Full Access and online learning options, personalized-price explanations and links to official information.
 - Searchable sample of eight verified Saudi center entries, with working telephone links and the full official directory.
 - Mobile bottom navigation, desktop sidebar, keyboard-accessible dialogs, reduced-motion support and an app manifest.
@@ -36,7 +36,7 @@ Browser chat → Next.js `/api/chat` rewrite → Python → OpenAI `/v1/response
 
 The Python server owns the permanent API key, initial persona and knowledge. No permanent key is returned to the browser. The unified WebRTC interface follows [the official Realtime WebRTC guide](https://developers.openai.com/api/docs/guides/voice-webrtc?api=realtime), with the [Realtime guide](https://developers.openai.com/api/docs/guides/realtime) as the entry point.
 
-`backend/persona.py` contains the Saudi language and consultative tutoring instructions. `backend/data/knowledge.json` is a curated factual snapshot, not a live scraper or vector database. Update and review it as offerings change. Voice accent and factual adherence are model behaviors, not guarantees; a Saudi speaker should review the demo before public launch.
+`backend/persona.py` contains the Saudi language and consultative course-advisor instructions. `backend/data/knowledge.json` is a curated factual snapshot, not a live scraper or vector database. Update and review it as offerings change. Voice accent and factual adherence are model behaviors, not guarantees; a Saudi speaker should review the demo before public launch.
 
 ## Sources
 
@@ -46,7 +46,7 @@ Information and the supplied site's logo were reviewed on 14 September 2026:
 - [Official center directory](https://wallstreetenglish.edu.sa/institutes/)
 - [Full Access learning and pricing approach](https://wallstreetenglish.edu.sa/full-access-english-schools/)
 
-Only a sample of the center directory is included. No unverified fixed prices, package tiers, opening hours, promotions or outcome guarantees are supplied. Hala guides and teaches; the demo does not book appointments, collect leads, send messages, accept payments or assess an official CEFR level.
+Only a sample of the center directory is included. No unverified fixed prices, package tiers, opening hours, promotions or outcome guarantees are supplied. Hala listens, answers program questions and recommends learning options; the demo does not book appointments, collect leads, send messages, accept payments or assess an official CEFR level.
 
 ## Docker deployment
 
@@ -78,3 +78,5 @@ node scripts/voice-smoke.cjs
 ```
 
 This uses a synthetic microphone, checks a real greeting transcript and incoming audio bytes, then verifies mute and cleanup. It does not validate subjective Saudi accent quality or a physical phone's microphone/audio behavior.
+
+For optional live advisor behavior checks (billable API calls), run `.venv/bin/python scripts/advisor-smoke.py` and `HALA_ADVISOR_EVAL=1 node scripts/voice-smoke.cjs`. Set `HALA_BASE_URL` to test the deployed site. These check greeting, waiting, concise discovery, recommendation, pricing, no-teaching and declining; they do not guarantee every model response or real-microphone turn timing.

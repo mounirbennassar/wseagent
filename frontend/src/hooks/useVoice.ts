@@ -81,7 +81,7 @@ export function useVoice(language: "ar" | "en", goal: string) {
         if (generation.current !== attempt) return;
         if (timeout.current) clearTimeout(timeout.current);
         connecting.current = false; setStatus("listening");
-        dc.send(JSON.stringify({ type: "response.create", response: { instructions: language === "ar" ? "Say exactly this warm Saudi Arabic greeting, without adding more questions: يا هلا! أنا هلا، مساعدتك بالذكاء الاصطناعي لتعلّم الإنجليزية. وش أكثر شي ودّك تطوّره في إنجليزيتك؟" : "Briefly greet the learner in English, introduce yourself as Hala, an AI English learning guide, and ask their learning goal." } }));
+        dc.send(JSON.stringify({ type: "response.create" }));
       };
       dc.onmessage = message => {
         if (generation.current !== attempt) return;

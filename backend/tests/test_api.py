@@ -43,6 +43,7 @@ def test_chat_grounding_and_reply_extraction(client, monkeypatch):
     async def reply(self, url, **kwargs):
         data = kwargs["json"]
         assert data["store"] is False
+        assert data["input"][0] == {"role": "assistant", "content": main.greeting("ar")}
         assert "Saudi Arabic" in data["instructions"]
         assert "Never invent prices" in data["instructions"]
         assert "career" in data["instructions"]
@@ -58,6 +59,7 @@ def test_realtime_session_configuration_and_sdp(client, monkeypatch):
         assert url.endswith("/realtime/calls")
         config = json.loads(kwargs["files"]["session"][1])
         assert config["audio"]["input"]["turn_detection"]["interrupt_response"] is True
+        assert config["audio"]["input"]["turn_detection"]["eagerness"] == "low"
         assert config["audio"]["output"]["voice"] == "marin"
         assert config["output_modalities"] == ["audio"]
         return httpx.Response(201, text="v=0\r\nanswer")

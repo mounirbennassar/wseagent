@@ -32,6 +32,8 @@ test('chat success and retry preserve the learner message', async ({page})=>{
   let fail=true;
   await page.route('**/api/chat', route=>route.fulfill({status:fail?503:200,contentType:'application/json',body:JSON.stringify(fail?{detail:'Please try again'}:{reply:'يا هلا! خلّنا نبدأ بهدفك.'})}));
   await page.getByRole('button',{name:'تفضّل الكتابة؟',exact:false}).click();
+  await expect(page.locator('.chat-bubble.assistant')).toContainText('معك هلا من وول ستريت إنجلش');
+  await expect(page.locator('.chat-bubble.assistant')).not.toContainText('بالذكاء الاصطناعي');
   await page.getByRole('textbox',{name:'رسالتك لهلا'}).fill('أبي أتعلم إنجليزي');
   await page.getByRole('button',{name:'إرسال',exact:true}).click();
   await expect(page.locator('.error-notice[role=alert]')).toContainText('Please try again');

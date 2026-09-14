@@ -11,7 +11,7 @@ from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse, Response
 from pydantic import BaseModel, Field
 
-from backend.persona import KNOWLEDGE, instructions
+from backend.persona import KNOWLEDGE, greeting, instructions
 
 load_dotenv(Path(__file__).resolve().parents[1] / ".env")
 app = FastAPI(title="Hala · WSE Saudi", docs_url=None, redoc_url=None)
@@ -86,12 +86,13 @@ def session_config(language="ar", goal="general"):
         "model": os.getenv("OPENAI_REALTIME_MODEL", "gpt-realtime-2.1"),
         "instructions": instructions(language, goal),
         "output_modalities": ["audio"],
-        "max_output_tokens": 800,
+        # Allow room for reasoning without cutting a short spoken reply mid-sentence.
+        "max_output_tokens": 1200,
         "audio": {
             "input": {
                 "noise_reduction": {"type": "near_field"},
                 "transcription": {"model": "gpt-4o-mini-transcribe"},
-                "turn_detection": {"type": "semantic_vad", "eagerness": "medium", "create_response": True, "interrupt_response": True},
+                "turn_detection": {"type": "semantic_vad", "eagerness": "low", "create_response": True, "interrupt_response": True},
             },
             "output": {"voice": "marin"},
         },
@@ -126,8 +127,8 @@ async def chat(body: ChatRequest):
     result = await openai_post("responses", json={
         "model": os.getenv("OPENAI_CHAT_MODEL", "gpt-4.1-mini"),
         "instructions": instructions(body.language, body.goal),
-        "input": [message.model_dump() for message in body.messages],
-        "max_output_tokens": 650,
+        "input": [{"role": "assistant", "content": greeting(body.language)}, *[message.model_dump() for message in body.messages]],
+        "max_output_tokens": 450,
         "store": False,
     })
     text = "\n".join(part["text"] for item in result.json().get("output", []) if item.get("type") == "message" for part in item.get("content", []) if part.get("type") == "output_text")
